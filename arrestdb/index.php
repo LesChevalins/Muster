@@ -1,6 +1,6 @@
 <?php
 
-$dsn = '';
+$dsn = 'mysql://root@localhost/muster';
 $clients = [];
 
 /**
