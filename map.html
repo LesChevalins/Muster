@@ -1,0 +1,165 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+
+	<head>
+		<link media="all" type="text/css" rel="stylesheet" href="css/map.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<!-- Elément Google Maps indiquant que la carte doit être affiché en plein écran et
+		qu'elle ne peut pas être redimensionnée par l'utilisateur -->
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<!-- Inclusion de l'API Google MAPS -->
+		<!-- Le paramètre "sensor" indique si cette application utilise détecteur pour déterminer la position de l'utilisateur -->
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdzLI8IgAA83XT05Q1JyHJevB4vENjtx8&callback=initMap"></script>
+		<script type="text/javascript">
+			function initialiser() {
+				var latlng = new google.maps.LatLng(45.764043, 	4.835658999999964);
+				//objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
+				//de définir des options d'affichage de notre carte
+				var options = {
+					center: latlng,
+					zoom: 15,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+
+				//constructeur de la carte qui prend en paramêtre le conteneur HTML
+				//dans lequel la carte doit s'afficher et les options
+				var carte = new google.maps.Map(document.getElementById("carte"), options);
+			}
+		</script>
+
+		<script>
+			function initialiser() {
+				var latlng = new google.maps.LatLng(45.764043, 	4.835658999999964);
+
+				var options = {
+					center: latlng,
+					zoom: 13,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+
+				var carte = new google.maps.Map(document.getElementById("carte"), options);
+
+/****************Nouveau code****************/
+
+	//création des design markers
+
+	//création du marqueur
+	var marqueur_premium = new google.maps.Marker({
+		position: new google.maps.LatLng(45.7846076, 4.851606299999958),
+		icon: 'pics/marker_premium.png',
+		map: carte
+	});
+
+	var marqueur_add = new google.maps.Marker({
+		position: new google.maps.LatLng(45.777283, 4.83475610000005),
+		icon: 'pics/marker_add.png',
+		map: carte
+	});
+
+	var marqueur_soft = new google.maps.Marker({
+		position: new google.maps.LatLng(45.747012, 4.845293399999946),
+		icon: 'pics/marker_soft.png',
+		map: carte
+	});
+
+	google.maps.event.addListener(marqueur_soft, 'click', function() {
+	document.getElementById('pop_soft').style.display="block";
+	});
+
+	google.maps.event.addListener(marqueur_premium, 'click', function() {
+	document.getElementById('pop_premium').style.display="block";
+	});
+
+	google.maps.event.addListener(marqueur_premium, 'click', function() {
+	});
+
+	marqueur_add.setDraggable(true);
+
+	google.maps.event.addListener(marqueur_add, 'dragend', function(event) {
+	//message d'alerte affichant la nouvelle position du marqueur
+	alert("La nouvelle coordonnée du marqueur est : "+event.latLng);
+	});
+
+	}
+
+	/***********************Custom map marker************************/
+
+
+		</script>
+
+	</head>
+	<body onload="initialiser()">
+		<div id="carte" style="width:100%; height:100%; position:absolute; top:0; left:0;"></div>
+
+		<nav class="menu" tabindex="0">
+			<div class="smartphone-menu-trigger"></div>
+  			<header class="avatar">
+					<img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" />
+    			<h2>John D.</h2>
+  			</header>
+				<ul>
+    			<li tabindex="0" class=""><span>Dashboard</span></li>
+    			<li tabindex="0" class="icon-customers"><span>Customers</span></li>
+    			<li tabindex="0" class="icon-users"><span>Users</span></li>
+    			<li tabindex="0" class="icon-settings"><span>Settings</span></li>
+  			</ul>
+		</nav>
+
+		<div id="pop_soft" style="display:none;">
+			<img src="pics/close_soft.png" class="close" onclick="document.getElementById('pop_soft').style.display='none';">
+			<div id="soft_event">
+				<div class="img_event"></div>
+				<div class="desc_event">
+					<h1 style="color:#03EBA6;">Titre de l'annonce</h1>
+					<p>Description de l'annonce ->>> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<ul>
+						<li><h2><img src="pics/marker_soft.png"> On fout l'adresse</h2></li>
+						<li><img src=""><h2><span style="color:#03EBA6;">Le</span> 20 / 09 / 2016 <span style="color:#03EBA6;">à</span> 20H00</h2></li>
+					</ul>
+					<h2 style="text-align:center;"><img src="pics/phone_soft.png"> + 33 6 56 65 45 43</h2>
+				</div>
+				<div class="profiler">
+					<img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" class="pic-profil">
+					<h2>Nom de l'utilisateur</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
+				<div class="comment">
+					<h1 style="color:#03EBA6;">Les avis sur "Nom de l'utilisateur"</h1>
+					<ul class="comment-rate">
+						<li>Quelques stars</li>
+						<li>"Super ce mec, activité au top !"</li>
+					</ul>
+				</div>
+			</div>
+	</div>
+
+
+	<div id="pop_premium" style="display:none;">
+		<img src="pics/close_premium.png" class="close" onclick="document.getElementById('pop_premium').style.display='none';">
+		<div id="soft_event">
+			<div class="img_event"></div>
+			<div class="desc_event">
+				<h1 style="color:#2FAACE;">Titre de l'annonce</h1>
+				<p>Description de l'annonce ->>> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<ul>
+					<li><h2><img src="pics/marker_premium.png"> On fout l'adresse</h2></li>
+					<li><img src=""><h2><span style="color:#2FAACE;">Le</span> 20 / 09 / 2016 <span style="color:#2FAACE;">à</span> 20H00</h2></li>
+				</ul>
+				<h2 style="text-align:center;"><img src="pics/phone_premium.png"> + 33 6 56 65 45 43</h2>
+			</div>
+			<div class="profiler">
+				<img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" class="pic-profil">
+				<h2>Nom de l'utilisateur</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</div>
+			<div class="comment">
+				<h1 style="color:#2FAACE;">Les avis sur "Nom de l'utilisateur"</h1>
+				<ul class="comment-rate">
+					<li>Quelques stars</li>
+					<li>"Super ce mec, activité au top !"</li>
+				</ul>
+			</div>
+		</div>
+</div>
+
+	</body>
+</html>
