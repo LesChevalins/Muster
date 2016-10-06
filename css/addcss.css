@@ -299,3 +299,19 @@ box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65)
         display: list-item;
 }
 }
+
+
+.profill {
+  text-align: center;
+  color: white;
+  padding: 3%;
+}
+
+.profill img {
+  border-radius: 50%;
+
+}
+
+.profill a {
+  cursor: pointer;
+}
