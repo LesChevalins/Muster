@@ -333,9 +333,19 @@ box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65)
   left:0;
   background-image: url(../pics/background_noir.jpg);
   background-size: cover;
+  text-align: center;
+  padding-top: 150px;
 }
 
 .video-background img {
   width: 100%;
   height: 100%;
+}
+
+.video-background .player {
+  width: 100px;
+}
+
+iframe {
+  padding: 0;
 }
