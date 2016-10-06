@@ -185,3 +185,9 @@ font-size: 30px;
     padding-left: 10%;
   }
 }
+
+@media screen and (min-width: 1720px) {
+  .listing li{
+    padding-left: 10%;
+  }
+}
