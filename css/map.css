@@ -66,6 +66,9 @@ body {
 .menu ul li.icon-settings {
   background-image: url("http://www.entypo.com/images//tools.svg");
 }
+.menu ul li.icon-checked {
+  background-image: url("../pics/checkbox.png");
+}
 .menu ul li:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }

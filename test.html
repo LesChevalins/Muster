@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div>
+		<div id="test">
+			<a id="1" href="" onclick="note(this.id)">*</a>
+			<a id="2" href="" onclick="note(this.id)">*</a>
+			<a id="3" href="" onclick="note(this.id)">*</a>
+			<a id="4" href="" onclick="note(this.id)">*</a>
+			<a id="5" href="" onclick="note(this.id)">*</a>
+			<div id="result"></div>
+
+			<script type="text/javascript">;
+				function note(clicked_id)
+				{
+				    /*alert(clicked_id);*/
+				    var i = clicked_id;
+				    /*document.write('*');
+				    document.write('<div>' + clicked_id + '*' + '</div>');*/
+				    for(v=i; v>0; v--)
+				    {
+				    	document.write('*');
+				    }
+				}
+
+
+			</script>
+		</div>
+	</div>
+
+</body>
+</html>

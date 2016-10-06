@@ -69,6 +69,13 @@
 		</script>
 
 		<script>
+
+		var marqueur_premium = [];
+		var marqueur_soft = [];
+		var events = [];
+		var date = new Date().toJSON().slice(0,10);
+		var rates = [];
+
 			function initialiser() {
 				var latlng = new google.maps.LatLng(45.764043, 	4.835658999999964);
 
@@ -91,12 +98,6 @@
 		map: carte
 	});
 
-	var marqueur_premium = [];
-	var marqueur_soft = [];
-	var events = [];
-	var date = new Date().toJSON().slice(0,10);
-	var rates = [];
-
 	get_events();
 
 	function get_events(){
@@ -116,6 +117,7 @@
 			var event = events[i];
 			get_location(event["location_id"], i);
 			get_user(event["user_id"], i);
+			get_category(event["category_id"], i);
 		}
 	}
 
@@ -140,10 +142,27 @@
 		    var user = JSON.parse(xhttp_user.responseText);
 				delete events[i]["user_id"];
 				events[i]["user"] = user[0];
-				display_event(i);
 		  }
 		};
 		xhttp_user.send();
+	}
+
+	function get_category(category_id, i){
+		var xhttp_category = new XMLHttpRequest();
+		xhttp_category.open("GET", "arrestdb/index.php/eachother_category/category_id/" + category_id, true);
+		xhttp_category.onreadystatechange = function() {
+	  if (this.readyState == 4 && this.status == 200) {
+		    var category = JSON.parse(xhttp_category.responseText);
+				delete events[i]["category_id"];
+				events[i]["category"] = category[0];
+				display_event(i);
+
+				if(document.getElementById("category_" + category_id) == undefined){
+					document.getElementsByClassName("categories-list")[0].innerHTML += "<li onclick='toggle_category(this)' class='icon-checked' id='category_" + category[0]["category_id"] + "'><span>" + category[0]["category_name"] + "</span></li>";
+				}
+		  }
+		};
+		xhttp_category.send();
 	}
 
 	function display_event(i){
@@ -171,6 +190,7 @@
 				icon: 'pics/marker_premium.png',
 				map: carte
 			});
+			marqueur_premium[i].set("class", "category_" + event["category"]["category_id"]);
 			google.maps.event.addListener(marqueur_premium[i], 'click', function(){
 					var event = events[i];
 					var user = event["user"];
@@ -241,6 +261,7 @@
 				icon: 'pics/marker_soft.png',
 				map: carte
 			});
+			marqueur_soft[i].set("class", "category_" + event["category"]["category_id"]);
 			google.maps.event.addListener(marqueur_soft[i], 'click', function(){
 					var event = events[i];
 					var user = event["user"];
@@ -311,6 +332,35 @@
 
 	}
 
+	// function toggle_category(cat){
+	// 	if(cat.getAttribute("class") == "icon-checked"){
+	// 		cat.setAttribute("class", "");
+	// 		for(e = 0; e < marqueur_soft.length; e++){
+	// 			if(marqueur_soft[e].get("class") == cat.id){
+	// 				marqueur_soft[e].setVisible(false);
+	// 			}
+	// 		}
+	// 		for(e = 0; e < marqueur_premium.length; e++){
+	// 			if(marqueur_premium[e].get("class") == cat.id){
+	// 				marqueur_premium[e].setVisible(false);
+	// 			}
+	// 		}
+	// 	}
+	// 	else{
+	// 		cat.setAttribute("class", "icon-checked");
+	// 		for(e = 0; e < marqueur_soft.length; e++){
+	// 			if(marqueur_soft[e].get("class") == cat.id){
+	// 				marqueur_soft[e].setVisible(true);
+	// 			}
+	// 		}
+	// 		for(e = 0; e < marqueur_premium.length; e++){
+	// 			if(marqueur_premium[e].get("class") == cat.id){
+	// 				marqueur_premium[e].setVisible(true);
+	// 			}
+	// 		}
+	// 	}
+	// }
+
 	/***********************Custom map marker************************/
 
 
@@ -330,6 +380,7 @@
     			<li tabindex="0" class="icon-dashboard"><span>Rechercher un évènement</span></li>
     			<li tabindex="0" class="icon-customers" onclick="document.getElementById('new-event').style.display='block';"><span>Déposer une annonce</span></li>
     			<li tabindex="0" class="icon-users"><a href="profil.html"><span>Mon profil</span></a></li>
+					<div class="categories-list" style="margin-top: 25px"></div>
   			</ul>
 		</nav>
 
@@ -396,7 +447,7 @@
 
 <div id="new-event" style="display:none;">
 	<div id="form-new">
-		<a href="map.html"><img src="pics/close-co.png" class="close-co"></a>
+		<a onclick="document.getElementById('new-event').style.display = 'none'"><img src="pics/close-co.png" class="close-co"></a>
 		<img src="pics/pic1.png">
 		<form class="form-horizontal">
 		  <div class="form-group">
