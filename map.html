@@ -95,6 +95,7 @@
 	var marqueur_soft = [];
 	var events = [];
 	var date = new Date().toJSON().slice(0,10);
+	var rates = [];
 
 	get_events();
 
@@ -171,9 +172,62 @@
 				map: carte
 			});
 			google.maps.event.addListener(marqueur_premium[i], 'click', function(){
-				var event = events[i];
-				var pop_up = document.getElementById('pop_premium');
-				pop_up.style.display = "block";
+					var event = events[i];
+					var user = event["user"];
+					var pop_up = document.getElementById('pop_premium');
+					pop_up.style.display = "block";
+
+					pop_up.getElementsByClassName("pop_title")[0].innerHTML = event["event_name"];
+					pop_up.getElementsByClassName("pop_desc")[0].innerHTML = event["event_description"];
+					pop_up.getElementsByClassName("pop_address")[0].innerHTML = event["location"]["location_address"] + ", " + event["location"]["location_city"];
+					var date_split = event["event_date"].split(" ")[0].split("-");
+					var date = date_split[2] + " / " + date_split[1] + " / " + date_split[0];
+					pop_up.getElementsByClassName("pop_date")[0].innerHTML = date;
+					var time_split = event["event_date"].split(" ")[1].split(":");
+					var time = time_split[0] + "H" + time_split[1];
+					pop_up.getElementsByClassName("pop_time")[0].innerHTML = time;
+					var phone_split = user["user_phone"];
+					pop_up.getElementsByClassName("pop_phone")[0].innerHTML = phone_split;
+					pop_up.getElementsByClassName("pic-profil")[0].src = user["user_picture"];
+					pop_up.getElementsByClassName("pop_username")[0].innerHTML = user["user_firstname"] + " " + user["user_lastname"];
+					pop_up.getElementsByClassName("pop_userdesc")[0].innerHTML = user["user_description"];
+					pop_up.getElementsByClassName("pop_username")[1].innerHTML = user["user_firstname"] + " " + user["user_lastname"];
+
+					var xhttp_rate = new XMLHttpRequest();
+					xhttp_rate.open("GET", "arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
+					xhttp_rate.onreadystatechange = function() {
+				  if (this.readyState == 4 && this.status == 200) {
+					    rates = JSON.parse(xhttp_rate.responseText);
+
+							for(j = 0; j < rates.length; j++){
+								var note_id = rates[j]["note_id"];
+								pop_up.getElementsByClassName("pop_notes")[0].innerHTML = "";
+
+								var xhttp_note = new XMLHttpRequest();
+								xhttp_note.open("GET", "arrestdb/index.php/eachother_note/note_id/" + note_id, true);
+								xhttp_note.onreadystatechange = function() {
+							  if (this.readyState == 4 && this.status == 200) {
+										var note = JSON.parse(xhttp_note.responseText)[0];
+
+										pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<ul class='comment-rate'>";
+										for(k = 5; k >= 1; k--){
+											if(k >= note["note_value"]){
+												pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<span style='color: gold;'>&#9733;<span>";
+											}
+											else{
+												pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<span>&#9734;</span>";
+											}
+										}
+										pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<span style='font-weight: bold; padding-left: 5px;'>" + note["note_title"] + "</span><br/>";
+										pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<span>" + note["note_description"] + "</span>"
+										pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "</ul>";
+								  }
+								};
+								xhttp_note.send();
+							}
+					  }
+					};
+					xhttp_rate.send();
 			});
 		}
 	}
@@ -189,6 +243,7 @@
 			});
 			google.maps.event.addListener(marqueur_soft[i], 'click', function(){
 					var event = events[i];
+					var user = event["user"];
 					var pop_up = document.getElementById('pop_soft');
 					pop_up.style.display = "block";
 
@@ -201,12 +256,48 @@
 					var time_split = event["event_date"].split(" ")[1].split(":");
 					var time = time_split[0] + "H" + time_split[1];
 					pop_up.getElementsByClassName("pop_time")[0].innerHTML = time;
-					var phone_split = event["user"]["user_phone"].replace(/(.{2})/g,"$1 ");
+					var phone_split = user["user_phone"];
 					pop_up.getElementsByClassName("pop_phone")[0].innerHTML = phone_split;
-					pop_up.getElementsByClassName("pic-profil")[0].src = event["user"]["user_picture"];
-					pop_up.getElementsByClassName("pop_username")[0].innerHTML = event["user"]["user_firstname"] + " " + event["user"]["user_lastname"];
-					pop_up.getElementsByClassName("pop_userdesc")[0].innerHTML = event["user"]["user_description"];
-					pop_up.getElementsByClassName("pop_username")[1].innerHTML = event["user"]["user_firstname"] + " " + event["user"]["user_lastname"];
+					pop_up.getElementsByClassName("pic-profil")[0].src = user["user_picture"];
+					pop_up.getElementsByClassName("pop_username")[0].innerHTML = user["user_firstname"] + " " + user["user_lastname"];
+					pop_up.getElementsByClassName("pop_userdesc")[0].innerHTML = user["user_description"];
+					pop_up.getElementsByClassName("pop_username")[1].innerHTML = user["user_firstname"] + " " + user["user_lastname"];
+
+					var xhttp_rate = new XMLHttpRequest();
+					xhttp_rate.open("GET", "arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
+					xhttp_rate.onreadystatechange = function() {
+				  if (this.readyState == 4 && this.status == 200) {
+					    rates = JSON.parse(xhttp_rate.responseText);
+
+							for(j = 0; j < rates.length; j++){
+								var note_id = rates[j]["note_id"];
+								pop_up.getElementsByClassName("pop_notes")[0].innerHTML = "";
+
+								var xhttp_note = new XMLHttpRequest();
+								xhttp_note.open("GET", "arrestdb/index.php/eachother_note/note_id/" + note_id, true);
+								xhttp_note.onreadystatechange = function() {
+							  if (this.readyState == 4 && this.status == 200) {
+										var note = JSON.parse(xhttp_note.responseText)[0];
+
+										pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<ul class='comment-rate'>";
+										for(k = 5; k >= 1; k--){
+											if(k >= note["note_value"]){
+												pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<span style='color: gold;'>&#9733;<span>";
+											}
+											else{
+												pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<span>&#9734;</span>";
+											}
+										}
+										pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<span style='font-weight: bold; padding-left: 5px;'>" + note["note_title"] + "</span><br/>";
+										pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "<span>" + note["note_description"] + "</span>"
+										pop_up.getElementsByClassName("pop_notes")[0].innerHTML += "</ul>";
+								  }
+								};
+								xhttp_note.send();
+							}
+					  }
+					};
+					xhttp_rate.send();
 			});
 		}
 	}
@@ -262,7 +353,7 @@
 				</div>
 				<div class="comment">
 					<h1 style="color:#03EBA6;">Les avis sur <span class="pop_username">"Nom de l'utilisateur"</span></h1>
-					<span>
+					<span style="inline-block" class="pop_notes">
 						<ul class="comment-rate">
 							<li>Quelques stars</li>
 							<li>"Super ce mec, activité au top !"</li>
@@ -293,7 +384,7 @@
 			</div>
 			<div class="comment">
 				<h1 style="color:#2FAACE;">Les avis sur <span class="pop_username">"Nom de l'utilisateur"</span></h1>
-				<span>
+				<span style="inline-block" class="pop_notes">
 					<ul class="comment-rate">
 						<li>Quelques stars</li>
 						<li>"Super ce mec, activité au top !"</li>
