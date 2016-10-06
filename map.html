@@ -43,34 +43,131 @@
 	//création des design markers
 
 	//création du marqueur
-	var marqueur_premium = new google.maps.Marker({
-		position: new google.maps.LatLng(45.7846076, 4.851606299999958),
-		icon: 'pics/marker_premium.png',
-		map: carte
-	});
-
 	var marqueur_add = new google.maps.Marker({
 		position: new google.maps.LatLng(45.777283, 4.83475610000005),
 		icon: 'pics/marker_add.png',
 		map: carte
 	});
 
-	var marqueur_soft = new google.maps.Marker({
-		position: new google.maps.LatLng(45.747012, 4.845293399999946),
-		icon: 'pics/marker_soft.png',
-		map: carte
-	});
+	var marqueur_premium = [];
+	var marqueur_soft = [];
+	var events = [];
+	var date = new Date().toJSON().slice(0,10);
 
-	google.maps.event.addListener(marqueur_soft, 'click', function() {
-	document.getElementById('pop_soft').style.display="block";
-	});
+	get_events();
 
-	google.maps.event.addListener(marqueur_premium, 'click', function() {
-	document.getElementById('pop_premium').style.display="block";
-	});
+	function get_events(){
+		var xhttp_events = new XMLHttpRequest();
+		xhttp_events.open("GET", "arrestdb/index.php/eachother_event/", true);
+		xhttp_events.onreadystatechange = function() {
+	  if (this.readyState == 4 && this.status == 200) {
+		    events = JSON.parse(xhttp_events.responseText);
+				complete_events();
+		  }
+		};
+		xhttp_events.send();
+	}
 
-	google.maps.event.addListener(marqueur_premium, 'click', function() {
-	});
+	function complete_events(){
+		for(i = 0; i < events.length; i++){
+			var event = events[i];
+			get_location(event["location_id"], i);
+			get_user(event["user_id"], i);
+		}
+	}
+
+	function get_location(location_id, i){
+		var xhttp_location = new XMLHttpRequest();
+		xhttp_location.open("GET", "arrestdb/index.php/eachother_location/location_id/" + location_id, true);
+		xhttp_location.onreadystatechange = function() {
+	  if (this.readyState == 4 && this.status == 200) {
+		    var location = JSON.parse(xhttp_location.responseText);
+				delete events[i]["location_id"];
+				events[i]["location"] = location[0];
+		  }
+		};
+		xhttp_location.send();
+	}
+
+	function get_user(user_id, i){
+		var xhttp_user = new XMLHttpRequest();
+		xhttp_user.open("GET", "arrestdb/index.php/eachother_user/user_id/" + user_id, true);
+		xhttp_user.onreadystatechange = function() {
+	  if (this.readyState == 4 && this.status == 200) {
+		    var user = JSON.parse(xhttp_user.responseText);
+				delete events[i]["user_id"];
+				events[i]["user"] = user[0];
+				display_event(i);
+		  }
+		};
+		xhttp_user.send();
+	}
+
+	function display_event(i){
+			var event = events[i];
+			if(event["user"]["user_subscription_end_date"] != undefined){
+				event["user"]["user_subscription_end_date"] = event["user"]["user_subscription_end_date"].substring(0,10);
+				if(date < event["user"]["user_subscription_end_date"]){
+					display_event_premium(i);
+				}
+				else{
+					display_event_soft(i);
+				}
+			}
+			else{
+				display_event_soft(i);
+			}
+	}
+
+	function display_event_premium(i){
+		var event = events[i];
+		var location = event["location"];
+		if(location != undefined){
+			marqueur_premium[i] = new google.maps.Marker({
+				position: new google.maps.LatLng(location["location_latitude"], location["location_longitude"]),
+				icon: 'pics/marker_premium.png',
+				map: carte
+			});
+			google.maps.event.addListener(marqueur_premium[i], 'click', function(){
+				var event = events[i];
+				var pop_up = document.getElementById('pop_premium');
+				pop_up.style.display = "block";
+			});
+		}
+	}
+
+	function display_event_soft(i){
+		var event = events[i];
+		var location = event["location"];
+		if(location != undefined){
+			marqueur_soft[i] = new google.maps.Marker({
+				position: new google.maps.LatLng(location["location_latitude"], location["location_longitude"]),
+				icon: 'pics/marker_soft.png',
+				map: carte
+			});
+			google.maps.event.addListener(marqueur_soft[i], 'click', function(){
+					var event = events[i];
+					var pop_up = document.getElementById('pop_soft');
+					pop_up.style.display = "block";
+
+					pop_up.getElementsByClassName("pop_title")[0].innerHTML = event["event_name"];
+					pop_up.getElementsByClassName("pop_desc")[0].innerHTML = event["event_description"];
+					pop_up.getElementsByClassName("pop_address")[0].innerHTML = event["location"]["location_address"] + ", " + event["location"]["location_city"];
+					var date_split = event["event_date"].split(" ")[0].split("-");
+					var date = date_split[2] + " / " + date_split[1] + " / " + date_split[0];
+					pop_up.getElementsByClassName("pop_date")[0].innerHTML = date;
+					var time_split = event["event_date"].split(" ")[1].split(":");
+					var time = time_split[0] + "H" + time_split[1];
+					pop_up.getElementsByClassName("pop_time")[0].innerHTML = time;
+					var phone_split = event["user"]["user_phone"].replace(/(.{2})/g,"$1 ");
+					pop_up.getElementsByClassName("pop_phone")[0].innerHTML = phone_split;
+					pop_up.getElementsByClassName("pic-profil")[0].src = event["user"]["user_picture"];
+					pop_up.getElementsByClassName("pop_username")[0].innerHTML = event["user"]["user_firstname"] + " " + event["user"]["user_lastname"];
+					pop_up.getElementsByClassName("pop_userdesc")[0].innerHTML = event["user"]["user_description"];
+					pop_up.getElementsByClassName("pop_username")[1].innerHTML = event["user"]["user_firstname"] + " " + event["user"]["user_lastname"];
+			});
+		}
+	}
 
 	marqueur_add.setDraggable(true);
 
@@ -109,25 +206,27 @@
 			<div id="soft_event">
 				<div class="img_event"></div>
 				<div class="desc_event">
-					<h1 style="color:#03EBA6;">Titre de l'annonce</h1>
-					<p>Description de l'annonce ->>> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<h1 class="pop_title" style="color:#03EBA6;">Titre de l'annonce</h1>
+					<p class="pop_desc">Description de l'annonce ->>> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 					<ul>
-						<li><h2><img src="pics/marker_soft.png"> On fout l'adresse</h2></li>
-						<li><img src=""><h2><span style="color:#03EBA6;">Le</span> 20 / 09 / 2016 <span style="color:#03EBA6;">à</span> 20H00</h2></li>
+						<li><h2><img src="pics/marker_soft.png"> <span class="pop_address">On fout l'adresse</span></h2></li>
+						<li><img src=""><h2><span style="color:#03EBA6;">Le</span> <span class="pop_date">20 / 09 / 2016</span> <span style="color:#03EBA6;">à</span> <span class="pop_time">20H00</span></h2></li>
 					</ul>
-					<h2 style="text-align:center;"><img src="pics/phone_soft.png"> + 33 6 56 65 45 43</h2>
+					<h2 style="text-align:center;"><img src="pics/phone_soft.png"> <span class="pop_phone">+ 33 6 56 65 45 43</span></h2>
 				</div>
 				<div class="profiler">
 					<img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" class="pic-profil">
-					<h2>Nom de l'utilisateur</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<h2 class="pop_username">Nom de l'utilisateur</h2>
+					<p class="pop_userdesc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 				</div>
 				<div class="comment">
-					<h1 style="color:#03EBA6;">Les avis sur "Nom de l'utilisateur"</h1>
-					<ul class="comment-rate">
-						<li>Quelques stars</li>
-						<li>"Super ce mec, activité au top !"</li>
-					</ul>
+					<h1 style="color:#03EBA6;">Les avis sur <span class="pop_username">"Nom de l'utilisateur"</span></h1>
+					<span>
+						<ul class="comment-rate">
+							<li>Quelques stars</li>
+							<li>"Super ce mec, activité au top !"</li>
+						</ul>
+					</span>
 				</div>
 			</div>
 	</div>
@@ -138,25 +237,27 @@
 		<div id="soft_event">
 			<div class="img_event"></div>
 			<div class="desc_event">
-				<h1 style="color:#2FAACE;">Titre de l'annonce</h1>
-				<p>Description de l'annonce ->>> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<h1 class="pop_title" style="color:#2FAACE;">Titre de l'annonce</h1>
+				<p class="pop_desc">Description de l'annonce ->>> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 				<ul>
-					<li><h2><img src="pics/marker_premium.png"> On fout l'adresse</h2></li>
-					<li><img src=""><h2><span style="color:#2FAACE;">Le</span> 20 / 09 / 2016 <span style="color:#2FAACE;">à</span> 20H00</h2></li>
+					<li><h2><img src="pics/marker_premium.png"> <span class="pop_address">On fout l'adresse</span></h2></li>
+					<li><img src=""><h2><span style="color:#2FAACE;">Le</span> <span class="pop_date">20 / 09 / 2016</span> <span style="color:#2FAACE;">à</span> <span class="pop_time">20H00</span></h2></li>
 				</ul>
-				<h2 style="text-align:center;"><img src="pics/phone_premium.png"> + 33 6 56 65 45 43</h2>
+				<h2 style="text-align:center;"><img src="pics/phone_premium.png"> <span class="pop_phone">+ 33 6 56 65 45 43</span></h2>
 			</div>
 			<div class="profiler">
 				<img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" class="pic-profil">
-				<h2>Nom de l'utilisateur</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<h2 class="pop_username">Nom de l'utilisateur</h2>
+				<p class="pop_userdesc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 			</div>
 			<div class="comment">
-				<h1 style="color:#2FAACE;">Les avis sur "Nom de l'utilisateur"</h1>
-				<ul class="comment-rate">
-					<li>Quelques stars</li>
-					<li>"Super ce mec, activité au top !"</li>
-				</ul>
+				<h1 style="color:#2FAACE;">Les avis sur <span class="pop_username">"Nom de l'utilisateur"</span></h1>
+				<span>
+					<ul class="comment-rate">
+						<li>Quelques stars</li>
+						<li>"Super ce mec, activité au top !"</li>
+					</ul>
+				</span>
 			</div>
 		</div>
 </div>

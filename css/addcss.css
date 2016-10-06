@@ -180,6 +180,7 @@ font-size: 30px;
 
 }
 
+
 #co-pop {
   position: absolute;
 top: 0;
@@ -277,4 +278,5 @@ box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65)
   top: 0;
   left: 0;
   background-image: url('../pics/background_noir.jpg');
+
 }
