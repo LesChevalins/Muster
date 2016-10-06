@@ -287,6 +287,7 @@ body {
   .close {
         z-index: 99;
         position: absolute;
+            width: 8%;
   }
 
   .desc_event ul {
