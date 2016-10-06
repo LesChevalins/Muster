@@ -791,7 +791,7 @@ q:before,q:after {
 .tagline {
     font-weight: bold;
     font-size: 2em;
-    text-shadow: 0px 0px 6px white;
+    color: white;
 }
 
 .vcenter {
@@ -991,7 +991,7 @@ q:before,q:after {
 ** Home page
 */
 .home-header {
-    background: url(../pics/background.jpg) no-repeat center center;
+    background: url(../pics/background_noir.jpg) no-repeat center center;
     background-size: cover;
     background-position: 0px 0px;
     padding-top: 150px;
