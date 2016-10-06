@@ -1,0 +1,181 @@
+.slog {
+
+    font-size: 38px;
+  text-align: center;
+  width: 100%;
+}
+
+#process video {
+  width: 50%;
+  padding: 0;
+}
+
+
+#process {
+  padding: 0;
+}
+.text-video {
+  padding-left: 70px;
+  padding-right: 100px;
+}
+
+.maj {
+  font-weight: bold;
+}
+
+.upper {
+  text-transform: uppercase;
+}
+
+#avant-left{
+      padding-top: 50px;
+          padding-bottom: 50px;
+}
+
+#avant-left ul {
+  display: list-item;;
+  padding: 0;
+  list-style: none;
+}
+#avant-left ul li {
+  list-style: none;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 9px;
+}
+
+#avant-left img {
+  width: 60px;
+}
+
+#avant-left a {
+  text-align: center;
+}
+
+#avant-right {
+  padding: 0;
+}
+
+#avant-right img {
+  width: 100%;
+}
+
+#avantages {
+  padding: 0;
+  position: relative;
+}
+
+#avantages h2 {
+  font-size: 26px;
+}
+
+.pad {
+  padding-left: 78px;
+  padding-right: 95px;
+}
+.button {
+  text-align: center;
+}
+.btn {
+  -webkit-border-radius: 25;
+      -moz-border-radius: 25;
+      border-radius: 25px;
+      color: #fff;
+      font-size: 30px;
+      background: #ffc55c;
+      padding: 10px 60px 10px 60px;
+      text-decoration: none;
+}
+
+.btn:hover {
+  background: #e4e4e4;
+  text-decoration: none;
+}
+
+.mask {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#playstore {
+  width: 50%;
+  margin-left: 0;
+}
+
+#appstore {
+  margin-right: 0;
+}
+
+.big {
+  font-weight: bold;
+color: #FFC55C;
+font-size: 30px;
+}
+
+.listing {
+  list-style: none;
+  display: list-item;
+}
+
+.listing li {
+  list-style: none;
+  display: inline-block;
+  padding-right: 15px;
+}
+
+.aligner {
+  text-align: left;
+
+}
+
+.img-size img{
+  border-radius: 50%;
+}
+
+@media screen and (max-width: 800px) {
+  #appstore {
+    display: none;
+  }
+
+  #playstore {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 765px) {
+  #process video {
+    width: 100%;
+  }
+
+  #avant-left {
+    padding-bottom: 50px;
+  }
+
+  #avant-left ul {
+    text-align: center;
+  }
+
+  .mediaq {
+    padding-bottom: 50px;
+  }
+
+  .text-video {
+    padding-left:10px;
+    padding-right: 10px;;
+  }
+
+  .pad {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#valeur h2 {
+  margin-top:0;
+}
+
+.listing {
+  padding: 0;
+  text-align: center;
+}
+
+
+}
