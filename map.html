@@ -1,6 +1,48 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<html  class="overf" xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 
 	<head>
+		<meta charset="utf-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<meta name="keywords" content="application moblie, apple, android, ios, enfance, mission, mission, jeu, jeu éducatif, mission ménagères enfant, application corvées, application mission ménagères, applications enfants, responsabiliser enfant, enfant brosser les dents, enfant ranger sa chambre, ranger sa chambre astuce, brossage de dents enfant, pistache, pistache application, preparer son cartable, faire ses devoirs enfants, faire son lit enfant, faire ses devoirs, faire son lit, ranger ses jouets, motiver mes enfants, motiver les enfants, enfants motivation, enfant motivation, appli mission ménagères, appli corvées, mission enfant, participation aux corvées, participation aux mission familiales, participation aux mission ménagères, donner des responsabilités aux enfants, partage des mission ménagères, partage des mission, partage des corvées, autonomie enfant, s'habiller le matin, mettre ses chaussures, débarrasser la table, prendre son bain"/>
+
+		<meta property="fb:admins" content="1832172524" />
+		<meta name="description" content="Pistache motive vos enfants dans leurs petites mission du quotidien grâce au jeu. Découvrez l’appli dès aujourd’hui !">
+		<meta name="keywords" content="Pistache application éducative motive enfants ranger sa chambre ios android">
+
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@PistacheApp">
+		<meta name="twitter:creator" content="@PistacheApp">
+		<meta name="twitter:title" content="Pistache motive vos enfants à faire leurs petites mission">
+		<meta name="twitter:description" content="Pistache motive vos enfants dans leurs petites mission du quotidien grâce au jeu. Découvrez l’appli dès aujourd’hui !">
+		<meta name="twitter:image" content="v2/inc/image/social.png">
+		<meta property="og:title" content="Pistache motive vos enfants à faire leurs petites mission" />
+		<meta property="og:image" content="v2/inc/image/social.png" />
+		<meta property="og:description" content="Pistache motive vos enfants dans leurs petites mission du quotidien grâce au jeu. Découvrez l’appli dès aujourd’hui !" />
+		<meta property="og:url" content="index.html" />
+		<meta property="og:type" content="article" />
+		<meta property="og:site_name" content="Pistache motive vos enfants à faire leurs petites mission" />
+
+		<meta name="apple-itunes-app" content="app-id=1080598913">
+
+		    <link rel="icon" type="image/png" href="image/fav.png" />
+		    <title>Lucky</title>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" type="text/css" href="plugins/bootstrap/css/bootstrap.min.css" >
+
+		<!-- Ionicons -->
+		<link rel="stylesheet" type="text/css" href="../code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+		<!-- le css -->
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/misc.css">
+		<link rel="stylesheet" type="text/css" href="css/addcss.css">
+		<link rel="stylesheet" type="text/css" href="plugins/sweetalert2/sweetalert2.min.css">
+
+		<!-- Slick -->
+		<link rel="stylesheet" type="text/css" href="plugins/slick/slick.css"/>
+		<link rel="stylesheet" type="text/css" href="plugins/slick/slick-theme.css"/>
 		<link media="all" type="text/css" rel="stylesheet" href="css/map.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<!-- Elément Google Maps indiquant que la carte doit être affiché en plein écran et
@@ -232,10 +274,9 @@
     			<h2>John D.</h2>
   			</header>
 				<ul>
-    			<li tabindex="0" class=""><span>Dashboard</span></li>
-    			<li tabindex="0" class="icon-customers"><span>Customers</span></li>
-    			<li tabindex="0" class="icon-users"><span>Users</span></li>
-    			<li tabindex="0" class="icon-settings"><span>Settings</span></li>
+    			<li tabindex="0" class="icon-dashboard"><span>Rechercher un évènement</span></li>
+    			<li tabindex="0" class="icon-customers" onclick="document.getElementById('new-event').style.display='block';"><span>Déposer une annonce</span></li>
+    			<li tabindex="0" class="icon-users"><a href="profil.html"><span>Mon profil</span></a></li>
   			</ul>
 		</nav>
 
@@ -298,6 +339,52 @@
 				</span>
 			</div>
 		</div>
+</div>
+
+<div id="new-event" style="display:none;">
+	<div id="form-new">
+		<a href="map.html"><img src="pics/close-co.png" class="close-co"></a>
+		<img src="pics/pic1.png">
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+		    <div class="col-sm-10">
+		      <input type="email" class="form-control" id="inputEmail" placeholder="Name">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="inputPassword3" class="col-sm-2 control-label">Date</label>
+		    <div class="col-sm-10">
+		      <input type="password" class="form-control" id="inputPassword" placeholder="Date">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="icone">Photo</label><br />
+		     <input type="file" name="icone" id="icone" /><br />
+		  </div>
+		  <div class="form-group">
+		    <label for="icone">Description</label><br />
+		    <textarea class="form-control" rows="3"></textarea>
+		  </div>
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">Adresse</label>
+		    <div class="col-sm-10">
+		      <input type="email" class="form-control" id="inputPhoto" placeholder=".jpg/.png">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-2 control-label">City</label>
+		    <div class="col-sm-10">
+		      <input type="email" class="form-control" id="inputDob" placeholder="Date de naissance">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-12">
+		      <button type="submit" class="btn btn-default">Creer</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
 </div>
 
 	</body>

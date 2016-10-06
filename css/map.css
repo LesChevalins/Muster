@@ -14,7 +14,7 @@ body {
 /****Menu Map*****/
 
 .menu {
-  background: #5bc995;
+  background: white;
   height: 100vh;
   width: 240px;
   position: fixed;
@@ -50,18 +50,18 @@ body {
   font-weight: regular;
   background-repeat: no-repeat;
   background-position: left 15px center;
-  background-size: auto 20px;
+  background-size: auto 35px;
   transition: all 0.15s linear;
   cursor: pointer;
 }
 .menu ul li.icon-dashboard {
-  background-image: url("http://www.entypo.com/images//gauge.svg");
+  background-image: url("../pics/looking.png");
 }
 .menu ul li.icon-customers {
-  background-image: url("http://www.entypo.com/images//briefcase.svg");
+  background-image: url("../pics/marker_add.png");
 }
 .menu ul li.icon-users {
-  background-image: url("http://www.entypo.com/images//users.svg");
+  background-image: url("../pics/user.png");
 }
 .menu ul li.icon-settings {
   background-image: url("http://www.entypo.com/images//tools.svg");
@@ -287,6 +287,7 @@ body {
   .close {
         z-index: 99;
         position: absolute;
+            width: 8%;
   }
 
   .desc_event ul {
@@ -295,3 +296,45 @@ body {
   }
 
 }
+
+
+#new-event {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#form-new {
+  margin-top: 15px;
+  width: 50%;
+  left: 50%;
+  margin-left: -25%;
+  position: absolute;
+  height: auto;
+  background-color: white;
+  padding: 3%;
+  text-align: center;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+}
+
+#form-new img {
+  padding-bottom: 50px;
+}
+
+@media screen and (max-width: 765px) {
+  #form-new{
+  margin-top: 0;
+width: 100%;
+left: 0;
+margin-left: 0;
+position: absolute;
+height: auto;
+background-color: white;
+padding: 3%;
+text-align: center;
+box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+ }
+
+ }

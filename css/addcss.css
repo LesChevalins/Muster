@@ -1,3 +1,7 @@
+.overf {
+  overflow-x: hidden;
+overflow-y: auto;
+}
 .slog {
 
     font-size: 38px;
@@ -70,6 +74,11 @@
   font-size: 26px;
 }
 
+.listing {
+  text-align: center;
+  padding: 0;
+}
+
 .pad {
   padding-left: 78px;
   padding-right: 95px;
@@ -119,7 +128,6 @@ font-size: 30px;
 
 .listing li {
   list-style: none;
-  display: inline-block;
   padding-right: 15px;
 }
 
@@ -178,5 +186,132 @@ font-size: 30px;
   text-align: center;
 }
 
+}
 
+
+#co-pop {
+  position: absolute;
+top: 0;
+width: 100%;
+height: 100%;
+}
+
+#sub-pop {
+  position: absolute;
+top: 0;
+background-color: rgba(255,255,255,0.5);
+width: 100%;
+height: 100%;
+}
+
+.sub-box {
+  margin-top: 85px;
+  width: 50%;
+  left: 50%;
+  margin-left: -25%;
+  position: absolute;
+  height: auto;
+  background-color: white;
+  padding: 3%;
+  text-align: center;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+}
+
+.insc-box {
+  margin-top: 85px;
+  width: 50%;
+  left: 50%;
+  margin-left: -25%;
+  position: absolute;
+  height: auto;
+  background-color: white;
+  padding: 3%;
+  text-align: center;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+}
+
+.user-pics {
+  padding-bottom: 50px;
+}
+
+.close-co {
+  position: absolute;
+right: 3%;
+top: 3%;
+cursor: pointer;
+}
+
+@media screen and (max-width: 765px) {
+.sub-box{
+margin-top: 85px;
+width: 100%;
+left: 0;
+margin-left: 0;
+position: absolute;
+height: auto;
+background-color: white;
+padding: 3%;
+text-align: center;
+box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65)
+}
+
+.close-co {
+  width: 7%;
+}
+
+.insc-box{
+margin-top: 85px;
+width: 100%;
+left: 0;
+margin-left: 0;
+position: absolute;
+height: auto;
+background-color: white;
+padding: 3%;
+text-align: center;
+box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65)
+}
+
+}
+
+
+#co-pop {
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.backg{
+  position: relative;
+  top: 0;
+  left: 0;
+  background-image: url('../pics/background_noir.jpg');
+
+}
+
+
+@media screen and (max-width: 1350px) {
+  #avant-left ul li {
+    list-style: none;
+    vertical-align: middle;
+    padding: 9px;
+    text-align: center;
+        display: list-item;
+}
+}
+
+
+.profill {
+  text-align: center;
+  color: white;
+  padding: 3%;
+}
+
+.profill img {
+  border-radius: 50%;
+
+}
+
+.profill a {
+  cursor: pointer;
 }
