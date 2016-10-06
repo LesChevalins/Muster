@@ -178,5 +178,10 @@ font-size: 30px;
   text-align: center;
 }
 
+}
 
+@media screen and (min-width: 1024px) {
+  .listing li{
+    padding-left: 10%;
+  }
 }
