@@ -165,11 +165,11 @@
 
     var email = document.getElementById('inputEmail').value;
     var mdp = document.getElementById('inputPassword').value;
-    var mdp = document.getElementById('inputNom').value;
-    var mdp = document.getElementById('inputPrenom').value;
-    var mdp = document.getElementById('inputTel').value;
-    var mdp = document.getElementById('icone').value;
-    var mdp = document.getElementById('inputDob').value;
+    var nom = document.getElementById('inputNom').value;
+    var prenom = document.getElementById('inputPrenom').value;
+    var tel = document.getElementById('inputTel').value;
+    var icon = document.getElementById('icone').value;
+    var dob = document.getElementById('inputDob').value;
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'inscription.php', true);
@@ -179,6 +179,6 @@
 
       }
     };
-    xhr.send("email=" + email + "&mdp=" + mdp);
+    xhr.send("email=" + email + "&mdp=" + mdp + "&nom=" + nom + "&prenom=" + prenom + "&tel=" + tel + "&icon=" + icon + "&dob=" + dob);
   }
 </script>
