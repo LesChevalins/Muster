@@ -60,6 +60,9 @@ body {
 .menu ul li.icon-customers {
   background-image: url("../pics/marker_add.png");
 }
+.menu ul li.icon-home {
+  background-image: url("../pics/home.png");
+}
 .menu ul li.icon-users {
   background-image: url("../pics/user.png");
 }
