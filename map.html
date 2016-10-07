@@ -102,7 +102,7 @@
 
 	function get_events(){
 		var xhttp_events = new XMLHttpRequest();
-		xhttp_events.open("GET", "163.172.188.241/arrestdb/index.php/eachother_event/", true);
+		xhttp_events.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_event/", true);
 		xhttp_events.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
 		    events = JSON.parse(xhttp_events.responseText);
@@ -123,7 +123,7 @@
 
 	function get_location(location_id, i){
 		var xhttp_location = new XMLHttpRequest();
-		xhttp_location.open("GET", "163.172.188.241/arrestdb/index.php/eachother_location/location_id/" + location_id, true);
+		xhttp_location.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_location/location_id/" + location_id, true);
 		xhttp_location.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
 		    var location = JSON.parse(xhttp_location.responseText);
@@ -136,7 +136,7 @@
 
 	function get_user(user_id, i){
 		var xhttp_user = new XMLHttpRequest();
-		xhttp_user.open("GET", "163.172.188.241/arrestdb/index.php/eachother_user/user_id/" + user_id, true);
+		xhttp_user.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_user/user_id/" + user_id, true);
 		xhttp_user.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
 		    var user = JSON.parse(xhttp_user.responseText);
@@ -149,7 +149,7 @@
 
 	// function get_category(category_id, i){
 	// 	var xhttp_category = new XMLHttpRequest();
-	// 	xhttp_category.open("GET", "163.172.188.241/arrestdb/index.php/eachother_category/category_id/" + category_id, true);
+	// 	xhttp_category.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_category/category_id/" + category_id, true);
 	// 	xhttp_category.onreadystatechange = function() {
 	//   if (this.readyState == 4 && this.status == 200) {
 	// 	    var category = JSON.parse(xhttp_category.responseText);
@@ -214,7 +214,7 @@
 					pop_up.getElementsByClassName("pop_username")[1].innerHTML = user["user_firstname"] + " " + user["user_lastname"];
 
 					var xhttp_rate = new XMLHttpRequest();
-					xhttp_rate.open("GET", "163.172.188.241/arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
+					xhttp_rate.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
 					xhttp_rate.onreadystatechange = function() {
 				  if (this.readyState == 4 && this.status == 200) {
 					    rates = JSON.parse(xhttp_rate.responseText);
@@ -224,7 +224,7 @@
 								pop_up.getElementsByClassName("pop_notes")[0].innerHTML = "";
 
 								var xhttp_note = new XMLHttpRequest();
-								xhttp_note.open("GET", "163.172.188.241/arrestdb/index.php/eachother_note/note_id/" + note_id, true);
+								xhttp_note.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_note/note_id/" + note_id, true);
 								xhttp_note.onreadystatechange = function() {
 							  if (this.readyState == 4 && this.status == 200) {
 										var note = JSON.parse(xhttp_note.responseText)[0];
@@ -285,7 +285,7 @@
 					pop_up.getElementsByClassName("pop_username")[1].innerHTML = user["user_firstname"] + " " + user["user_lastname"];
 
 					var xhttp_rate = new XMLHttpRequest();
-					xhttp_rate.open("GET", "163.172.188.241/arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
+					xhttp_rate.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
 					xhttp_rate.onreadystatechange = function() {
 				  if (this.readyState == 4 && this.status == 200) {
 					    rates = JSON.parse(xhttp_rate.responseText);
@@ -295,7 +295,7 @@
 								pop_up.getElementsByClassName("pop_notes")[0].innerHTML = "";
 
 								var xhttp_note = new XMLHttpRequest();
-								xhttp_note.open("GET", "163.172.188.241/arrestdb/index.php/eachother_note/note_id/" + note_id, true);
+								xhttp_note.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_note/note_id/" + note_id, true);
 								xhttp_note.onreadystatechange = function() {
 							  if (this.readyState == 4 && this.status == 200) {
 										var note = JSON.parse(xhttp_note.responseText)[0];
