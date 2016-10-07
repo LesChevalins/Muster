@@ -98,7 +98,23 @@
 		map: carte
 	});
 
+	get_profile();
 	get_events();
+
+	function get_profile(){
+		var xhttp_profile = new XMLHttpRequest();
+    xhttp_profile.open("GET", "http://163.172.188.241/Muster/profil.php", true);
+    xhttp_profile.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        profile = JSON.parse(xhttp_profile.responseText);
+
+        div = document.getElementsByClassName('avatar')[0];
+        div.getElementsByTagName('img')[0].src = profile["user_picture"];
+        div.getElementsByTagName('h2')[0].innerHTML = profile["user_firstname"] + " " + profile["user_lastname"];
+      }
+    };
+    xhttp_profile.send();
+	}
 
 	function get_events(){
 		var xhttp_events = new XMLHttpRequest();
@@ -376,8 +392,8 @@
 		<nav class="menu" tabindex="0">
 			<div class="smartphone-menu-trigger"></div>
   			<header class="avatar">
-					<img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" />
-    			<h2>John D.</h2>
+					<img src="" />
+    			<h2></h2>
   			</header>
 				<ul>
     			<li tabindex="0" class="icon-dashboard"><span>Rechercher un évènement</span></li>
