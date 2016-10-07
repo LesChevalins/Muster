@@ -4,28 +4,9 @@
 		<meta charset="utf-8">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-		<meta name="keywords" content="application moblie, apple, android, ios, enfance, mission, mission, jeu, jeu éducatif, mission ménagères enfant, application corvées, application mission ménagères, applications enfants, responsabiliser enfant, enfant brosser les dents, enfant ranger sa chambre, ranger sa chambre astuce, brossage de dents enfant, pistache, pistache application, preparer son cartable, faire ses devoirs enfants, faire son lit enfant, faire ses devoirs, faire son lit, ranger ses jouets, motiver mes enfants, motiver les enfants, enfants motivation, enfant motivation, appli mission ménagères, appli corvées, mission enfant, participation aux corvées, participation aux mission familiales, participation aux mission ménagères, donner des responsabilités aux enfants, partage des mission ménagères, partage des mission, partage des corvées, autonomie enfant, s'habiller le matin, mettre ses chaussures, débarrasser la table, prendre son bain"/>
 
-		<meta property="fb:admins" content="1832172524" />
-		<meta name="description" content="Pistache motive vos enfants dans leurs petites mission du quotidien grâce au jeu. Découvrez l’appli dès aujourd’hui !">
-		<meta name="keywords" content="Pistache application éducative motive enfants ranger sa chambre ios android">
 
-		<meta name="twitter:card" content="summary">
-		<meta name="twitter:site" content="@PistacheApp">
-		<meta name="twitter:creator" content="@PistacheApp">
-		<meta name="twitter:title" content="Pistache motive vos enfants à faire leurs petites mission">
-		<meta name="twitter:description" content="Pistache motive vos enfants dans leurs petites mission du quotidien grâce au jeu. Découvrez l’appli dès aujourd’hui !">
-		<meta name="twitter:image" content="v2/inc/image/social.png">
-		<meta property="og:title" content="Pistache motive vos enfants à faire leurs petites mission" />
-		<meta property="og:image" content="v2/inc/image/social.png" />
-		<meta property="og:description" content="Pistache motive vos enfants dans leurs petites mission du quotidien grâce au jeu. Découvrez l’appli dès aujourd’hui !" />
-		<meta property="og:url" content="index.html" />
-		<meta property="og:type" content="article" />
-		<meta property="og:site_name" content="Pistache motive vos enfants à faire leurs petites mission" />
-
-		<meta name="apple-itunes-app" content="app-id=1080598913">
-
-		    <link rel="icon" type="image/png" href="image/fav.png" />
+		    <link rel="icon" type="image/png" href="pics/logo.png" />
 		    <title>Lucky</title>
 
 		<!-- Bootstrap -->
@@ -98,7 +79,23 @@
 		map: carte
 	});
 
+	get_profile();
 	get_events();
+
+	function get_profile(){
+		var xhttp_profile = new XMLHttpRequest();
+    xhttp_profile.open("GET", "http://163.172.188.241/Muster/profil.php", true);
+    xhttp_profile.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        profile = JSON.parse(xhttp_profile.responseText);
+
+        div = document.getElementsByClassName('avatar')[0];
+        div.getElementsByTagName('img')[0].src = profile["user_picture"];
+        div.getElementsByTagName('h2')[0].innerHTML = profile["user_firstname"] + " " + profile["user_lastname"];
+      }
+    };
+    xhttp_profile.send();
+	}
 
 	function get_events(){
 		var xhttp_events = new XMLHttpRequest();
@@ -327,8 +324,8 @@
 	marqueur_add.setDraggable(true);
 
 	google.maps.event.addListener(marqueur_add, 'dragend', function(event) {
-	//message d'alerte affichant la nouvelle position du marqueur
-	alert("La nouvelle coordonnée du marqueur est : "+event.latLng);
+	//message d'alerte affichant la nouvelle position du marqueur7
+	document.getElementById('new-event').style.display='block';
 	});
 
 	}
@@ -376,8 +373,8 @@
 		<nav class="menu" tabindex="0">
 			<div class="smartphone-menu-trigger"></div>
   			<header class="avatar">
-					<img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" />
-    			<h2>John D.</h2>
+					<img src="" />
+    			<h2></h2>
   			</header>
 				<ul>
     			<li tabindex="0" class="icon-dashboard"><span>Rechercher un évènement</span></li>
@@ -452,17 +449,17 @@
 	<div id="form-new">
 		<a onclick="document.getElementById('new-event').style.display = 'none'"><img src="pics/close-co.png" class="close-co"></a>
 		<img src="pics/pic1.png">
-		<form class="form-horizontal">
+		<form class="form-horizontal" id="add-event">
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
 		    <div class="col-sm-10">
-		      <input type="email" class="form-control" id="inputEmail" placeholder="Name">
+		      <input type="text" class="form-control" id="inputName" placeholder="Name">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="inputPassword3" class="col-sm-2 control-label">Date</label>
 		    <div class="col-sm-10">
-		      <input type="password" class="form-control" id="inputPassword" placeholder="Date">
+		      <input type="Date" class="form-control" id="inputDate" placeholder="Date">
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -473,18 +470,18 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="icone">Description</label><br />
-		    <textarea class="form-control" rows="3"></textarea>
+		    <textarea class="form-control" id="description" rows="3"></textarea>
 		  </div>
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-2 control-label">Adresse</label>
 		    <div class="col-sm-10">
-		      <input type="email" class="form-control" id="inputPhoto" placeholder=".jpg/.png">
+		      <input type="text" class="form-control" id="inputAdresse" placeholder="Adresse">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-2 control-label">City</label>
 		    <div class="col-sm-10">
-		      <input type="email" class="form-control" id="inputDob" placeholder="Date de naissance">
+		      <input type="Date" class="form-control" id="inputCity" placeholder="Ville">
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -495,6 +492,28 @@
 		</form>
 	</div>
 </div>
+
+<script type="text/javascript">
+  var add = document.getElementById('add-event');
+  add.onsubmit = function(event){
+    event.preventDefault();
+		var name = document.getElementById('inputName').value;
+    var date = document.getElementById('IinputDate').value;
+    var photo = document.getElementById('icone').value;
+		var description = document.getElementById('description').value;
+		var adresse = document.getElementById('inputAdresse').value;
+		var city = document.getElementById('inputCity').value;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'arrestdb/index.php/eachother_user', true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+      }
+    };
+    xhr.send("event_name=" + name + "&event_date" + date + "&event_picture" + photo + "&event_description" + description + "&address" + adresse);
+  }
+</script>
 
 	</body>
 </html>

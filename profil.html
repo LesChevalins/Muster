@@ -53,9 +53,33 @@
   <div class="profill">
     <img src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg">
     <h1>Nom et prénom du user</h1>
-    <p>Description ->>> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <p>Telephone</p>
-    <p>date de naissance</p>
+    <p id="profil_desc">Description ->>> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p id="profil_phone">Telephone</p>
+    <p id="profil_date">date de naissance</p>
     <a href="map.html"><img src="pics/arrow.png"></a>
   </div>
 </body>
+
+<script>
+  get_user();
+
+  function get_user(){
+    var xhttp_user = new XMLHttpRequest();
+    xhttp_user.open("GET", "http://163.172.188.241/Muster/profil.php", true);
+    xhttp_user.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        user = JSON.parse(xhttp_user.responseText);
+
+        div = document.getElementsByClassName('profill')[0];
+        div.getElementsByTagName('img')[0].src = user["user_picture"];
+        div.getElementsByTagName('h1')[0].innerHTML = user["user_firstname"] + " " + user["user_lastname"];
+        document.getElementById('profil_desc').innerHTML = user["user_description"];
+        document.getElementById('profil_phone').innerHTML = user["user_phone"];
+        var date_split = user["user_date_of_birth"].split(" ")[0].split("-");
+        var date = date_split[2] + " / " + date_split[1] + " / " + date_split[0];
+        document.getElementById('profil_date').innerHTML = date;
+      }
+    };
+    xhttp_user.send();
+  }
+</script>
