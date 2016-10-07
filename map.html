@@ -55,7 +55,10 @@
 		var marqueur_soft = [];
 		var events = [];
 		var date = new Date().toJSON().slice(0,10);
+		var profile_id;
 		var rates = [];
+		var lat = 0;
+		var lng = 0;
 
 			function initialiser() {
 				var latlng = new google.maps.LatLng(45.764043, 	4.835658999999964);
@@ -88,6 +91,7 @@
     xhttp_profile.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         profile = JSON.parse(xhttp_profile.responseText);
+				profile_id = profile["user_id"];
 
         div = document.getElementsByClassName('avatar')[0];
         div.getElementsByTagName('img')[0].src = profile["user_picture"];
@@ -323,9 +327,11 @@
 
 	marqueur_add.setDraggable(true);
 
-	google.maps.event.addListener(marqueur_add, 'dragend', function(event) {
+	google.maps.event.addListener(marqueur_add, 'click', function(event) {
 	//message d'alerte affichant la nouvelle position du marqueur7
 	document.getElementById('new-event').style.display='block';
+	lat = marqueur_add.getPosition().lat();
+	lng = marqueur_add.getPosition().lng();
 	});
 
 	}
@@ -482,7 +488,7 @@
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-2 control-label">City</label>
 		    <div class="col-sm-10">
-		      <input type="Date" class="form-control" id="inputCity" placeholder="Ville">
+		      <input type="text" class="form-control" id="inputCity" placeholder="Ville">
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -498,21 +504,42 @@
   var add = document.getElementById('add-event');
   add.onsubmit = function(event){
     event.preventDefault();
+
 		var name = document.getElementById('inputName').value;
-    var date = document.getElementById('IinputDate').value;
+    var date = document.getElementById('inputDate').value;
     var photo = document.getElementById('icone').value;
 		var description = document.getElementById('description').value;
 		var adresse = document.getElementById('inputAdresse').value;
 		var city = document.getElementById('inputCity').value;
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'arrestdb/index.php/eachother_user', true);
+    xhr.open('POST', 'http://163.172.188.241/arrestdb/index.php/eachother_location', true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.onload = function () {
       if (xhr.status === 200) {
+				var xhr_location = new XMLHttpRequest();
+				xhr_location.open('GET', 'http://163.172.188.241/arrestdb/index.php/eachother_location?limit=1&by=location_id&order=desc', true);
+				xhr_location.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		    xhr_location.onload = function () {
+		      if (xhr_location.status === 200) {
+						var new_location_id = JSON.parse(xhr_location.responseText)[0]["location_id"];
+
+						xhr_add_event = new XMLHttpRequest();
+						xhr_add_event.open('POST', 'http://163.172.188.241/arrestdb/index.php/eachother_event');
+						xhr_add_event.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+						xhr_add_event.onload = function () {
+							if (xhr_add_event.status === 200) {
+								alert(profile_id);
+								window.location.href = "map.html";
+							}
+						};
+						xhr_add_event.send("event_name=" + name + "&event_description=" + description + "&location_id=" + new_location_id + "&user_id=" + profile_id);
+		      }
+		    };
+				xhr_location.send();
       }
     };
-    xhr.send("event_name=" + name + "&event_date" + date + "&event_picture" + photo + "&event_description" + description + "&address" + adresse);
+		xhr.send("location_address=" + adresse + "&location_city=" + city + "&location_longitude=" + lng + "&location_latitude=" + lat);
   }
 </script>
 
