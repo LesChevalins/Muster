@@ -102,7 +102,7 @@
 
 	function get_events(){
 		var xhttp_events = new XMLHttpRequest();
-		xhttp_events.open("GET", "arrestdb/index.php/eachother_event/", true);
+		xhttp_events.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_event/", true);
 		xhttp_events.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
 		    events = JSON.parse(xhttp_events.responseText);
@@ -117,13 +117,13 @@
 			var event = events[i];
 			get_location(event["location_id"], i);
 			get_user(event["user_id"], i);
-			get_category(event["category_id"], i);
+			// get_category(event["category_id"], i);
 		}
 	}
 
 	function get_location(location_id, i){
 		var xhttp_location = new XMLHttpRequest();
-		xhttp_location.open("GET", "arrestdb/index.php/eachother_location/location_id/" + location_id, true);
+		xhttp_location.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_location/location_id/" + location_id, true);
 		xhttp_location.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
 		    var location = JSON.parse(xhttp_location.responseText);
@@ -136,7 +136,7 @@
 
 	function get_user(user_id, i){
 		var xhttp_user = new XMLHttpRequest();
-		xhttp_user.open("GET", "arrestdb/index.php/eachother_user/user_id/" + user_id, true);
+		xhttp_user.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_user/user_id/" + user_id, true);
 		xhttp_user.onreadystatechange = function() {
 	  if (this.readyState == 4 && this.status == 200) {
 		    var user = JSON.parse(xhttp_user.responseText);
@@ -147,23 +147,23 @@
 		xhttp_user.send();
 	}
 
-	function get_category(category_id, i){
-		var xhttp_category = new XMLHttpRequest();
-		xhttp_category.open("GET", "arrestdb/index.php/eachother_category/category_id/" + category_id, true);
-		xhttp_category.onreadystatechange = function() {
-	  if (this.readyState == 4 && this.status == 200) {
-		    var category = JSON.parse(xhttp_category.responseText);
-				delete events[i]["category_id"];
-				events[i]["category"] = category[0];
-				display_event(i);
-
-				if(document.getElementById("category_" + category_id) == undefined){
-					document.getElementsByClassName("categories-list")[0].innerHTML += "<li onclick='toggle_category(this)' class='icon-checked' id='category_" + category[0]["category_id"] + "'><span>" + category[0]["category_name"] + "</span></li>";
-				}
-		  }
-		};
-		xhttp_category.send();
-	}
+	// function get_category(category_id, i){
+	// 	var xhttp_category = new XMLHttpRequest();
+	// 	xhttp_category.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_category/category_id/" + category_id, true);
+	// 	xhttp_category.onreadystatechange = function() {
+	//   if (this.readyState == 4 && this.status == 200) {
+	// 	    var category = JSON.parse(xhttp_category.responseText);
+	// 			delete events[i]["category_id"];
+	// 			events[i]["category"] = category[0];
+	// 			display_event(i);
+	//
+	// 			if(document.getElementById("category_" + category_id) == undefined){
+	// 				document.getElementsByClassName("categories-list")[0].innerHTML += "<li onclick='toggle_category(this)' class='icon-checked' id='category_" + category[0]["category_id"] + "'><span>" + category[0]["category_name"] + "</span></li>";
+	// 			}
+	// 	  }
+	// 	};
+	// 	xhttp_category.send();
+	// }
 
 	function display_event(i){
 			var event = events[i];
@@ -190,7 +190,7 @@
 				icon: 'pics/marker_premium.png',
 				map: carte
 			});
-			marqueur_premium[i].set("class", "category_" + event["category"]["category_id"]);
+			// marqueur_premium[i].set("class", "category_" + event["category"]["category_id"]);
 			google.maps.event.addListener(marqueur_premium[i], 'click', function(){
 					var event = events[i];
 					var user = event["user"];
@@ -214,7 +214,7 @@
 					pop_up.getElementsByClassName("pop_username")[1].innerHTML = user["user_firstname"] + " " + user["user_lastname"];
 
 					var xhttp_rate = new XMLHttpRequest();
-					xhttp_rate.open("GET", "arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
+					xhttp_rate.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
 					xhttp_rate.onreadystatechange = function() {
 				  if (this.readyState == 4 && this.status == 200) {
 					    rates = JSON.parse(xhttp_rate.responseText);
@@ -224,7 +224,7 @@
 								pop_up.getElementsByClassName("pop_notes")[0].innerHTML = "";
 
 								var xhttp_note = new XMLHttpRequest();
-								xhttp_note.open("GET", "arrestdb/index.php/eachother_note/note_id/" + note_id, true);
+								xhttp_note.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_note/note_id/" + note_id, true);
 								xhttp_note.onreadystatechange = function() {
 							  if (this.readyState == 4 && this.status == 200) {
 										var note = JSON.parse(xhttp_note.responseText)[0];
@@ -261,7 +261,7 @@
 				icon: 'pics/marker_soft.png',
 				map: carte
 			});
-			marqueur_soft[i].set("class", "category_" + event["category"]["category_id"]);
+			// marqueur_soft[i].set("class", "category_" + event["category"]["category_id"]);
 			google.maps.event.addListener(marqueur_soft[i], 'click', function(){
 					var event = events[i];
 					var user = event["user"];
@@ -285,7 +285,7 @@
 					pop_up.getElementsByClassName("pop_username")[1].innerHTML = user["user_firstname"] + " " + user["user_lastname"];
 
 					var xhttp_rate = new XMLHttpRequest();
-					xhttp_rate.open("GET", "arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
+					xhttp_rate.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_rate/rated_id/" + user["user_id"], true);
 					xhttp_rate.onreadystatechange = function() {
 				  if (this.readyState == 4 && this.status == 200) {
 					    rates = JSON.parse(xhttp_rate.responseText);
@@ -295,7 +295,7 @@
 								pop_up.getElementsByClassName("pop_notes")[0].innerHTML = "";
 
 								var xhttp_note = new XMLHttpRequest();
-								xhttp_note.open("GET", "arrestdb/index.php/eachother_note/note_id/" + note_id, true);
+								xhttp_note.open("GET", "http://163.172.188.241/arrestdb/index.php/eachother_note/note_id/" + note_id, true);
 								xhttp_note.onreadystatechange = function() {
 							  if (this.readyState == 4 && this.status == 200) {
 										var note = JSON.parse(xhttp_note.responseText)[0];
@@ -336,12 +336,14 @@
 	// 	if(cat.getAttribute("class") == "icon-checked"){
 	// 		cat.setAttribute("class", "");
 	// 		for(e = 0; e < marqueur_soft.length; e++){
-	// 			if(marqueur_soft[e].get("class") == cat.id){
+	// 			console.log(e)
+	// 			console.log(marqueur_soft[e]);
+	// 			if(marqueur_soft[e]["class"] == cat.id){
 	// 				marqueur_soft[e].setVisible(false);
 	// 			}
 	// 		}
 	// 		for(e = 0; e < marqueur_premium.length; e++){
-	// 			if(marqueur_premium[e].get("class") == cat.id){
+	// 			if(marqueur_premium[e]["class"] == cat.id){
 	// 				marqueur_premium[e].setVisible(false);
 	// 			}
 	// 		}
@@ -349,12 +351,12 @@
 	// 	else{
 	// 		cat.setAttribute("class", "icon-checked");
 	// 		for(e = 0; e < marqueur_soft.length; e++){
-	// 			if(marqueur_soft[e].get("class") == cat.id){
+	// 			if(marqueur_soft[e]["class"] == cat.id){
 	// 				marqueur_soft[e].setVisible(true);
 	// 			}
 	// 		}
 	// 		for(e = 0; e < marqueur_premium.length; e++){
-	// 			if(marqueur_premium[e].get("class") == cat.id){
+	// 			if(marqueur_premium[e]["class"] == cat.id){
 	// 				marqueur_premium[e].setVisible(true);
 	// 			}
 	// 		}
