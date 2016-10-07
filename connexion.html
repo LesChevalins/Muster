@@ -118,7 +118,7 @@
 
   function connection_success(){
     var xhr_session = new XMLHttpRequest();
-    xhr_session.open('GET', 'http://163.172.188.241/connexion.php?user_id=' + user["user_id"] + "&user_email=" + user["user_email"] + "&user_firstname=" + user["user_firstname"] + "&user_lastname=" + user["user_lastname"] + "&user_picture=" + user["user_picture"] + "&user_description=" + user["user_description"] + "&user_phone=" + user["user_phone"] + "&user_date_of_birth=" + user["user_date_of_birth"]);
+    xhr_session.open('GET', 'http://163.172.188.241/Muster/connexion.php?user_id=' + user["user_id"] + "&user_email=" + user["user_email"] + "&user_firstname=" + user["user_firstname"] + "&user_lastname=" + user["user_lastname"] + "&user_picture=" + user["user_picture"] + "&user_description=" + user["user_description"] + "&user_phone=" + user["user_phone"] + "&user_date_of_birth=" + user["user_date_of_birth"]);
     xhr_session.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr_session.onload = function () {
       if (xhr_session.status === 200) {
